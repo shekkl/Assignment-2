@@ -47,6 +47,31 @@ export class Ball extends THREE.Object3D
     public update(deltaTime : number) : void
     {
         // Add your code here
+        if (this.position.x <= -40+2.6 || this.position.x >= 40-2.6){ // collide with sides
+            this.velocity.x *= -1; // reverse direction
+            this.velocity.x -= .8 * deltaTime; // friction slows ball
+        }
+
+        if (this.position.y <= 2.6 || this.position.y >= 35-2.6){ // collide ceiling ground
+            this.velocity.y *= -1; // reverse direction
+            this.velocity.y -= .8 * deltaTime; // friction slows ball
+        }   
+
+        if (this.position.z <= -50+2.6 || this.position.z >= 50-2.6){ // collide front back
+            this.velocity.z *= -1; // reverse direction
+            this.velocity.z -= .8 * deltaTime; // friction slows ball not sure if works
+
+        }       
+        this.position.x += this.velocity.x * deltaTime;
+        //update velocity based on acceleration
+        if (this.position.y > 2.6){
+            this.velocity.y -= 9.8 * deltaTime; // gravity only occurs if ball isn't on the ground already
+        }
+        this.position.y += this.velocity.y * deltaTime; 
+        this.position.z += this.velocity.z * deltaTime;
+
+
+    
     }
 
     public updateShadow() : void
